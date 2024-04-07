@@ -2,6 +2,7 @@
 """Module"""
 
 import unittest
+from unittest import TestCase, mock
 from typing import Mapping, Sequence, Any
 from parameterized import parameterized
 from utils import access_nested_map, get_json
@@ -33,7 +34,8 @@ class TestAccessNestedMap(unittest.TestCase):
 
 class TestGetJson(unittest.TestCase):
     """class to test get_json"""
-     @parameterized.expand([
+
+    @parameterized.expand([
         ("http://example.com", {"payload": True}),
         ("http://holberton.io", {"payload": False})
     ])
@@ -43,5 +45,5 @@ class TestGetJson(unittest.TestCase):
         mock_response.json.return_value = test_payload
         with patch('utils.requests.get', return_value=mock_response):
             result = get_json(test_url)
-            mock_response.json.assert_called_once()
             self.assertEqual(result, test_payload)
+            mock_response.json.assert_called_once()
